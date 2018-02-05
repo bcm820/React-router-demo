@@ -2,52 +2,58 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 // In this example, each route has two components
-// that are rendered when the path matches the URL:
-// 1) Sidebar  2) Main
+// that are rendered when the path matches the URL.
+// The rendering occurs via <Route>, which also has its own props...
+// For example, props.match shows the path and URL (not shown below).
 
 const routes = [
   { path: '/', exact: true,
-    sidebar: () => <div>You chose: Home</div>,
+    sidebar: () => <Sidebar path='/'/>,
     main: () => <h2>Home</h2>
   },
   { path: '/about',
-    sidebar: () => <div>You chose: About</div>,
+    sidebar: () => <Sidebar path='/about'/>,
     main: () => <h2>About</h2>
   },
   { path: '/topics',
-    sidebar: () => <div>You chose: Topics</div>,
+    sidebar: () => <Sidebar path='/topics'/>,
     main: () => <h2>Topics</h2>
   }
 ]
 
-const Sidebar = props => (
-
+const Sidebar = ({path}) => (
+  
   <div style={{
-    margin: 20,
-    padding: 20,
-    width: 100,
+    margin: 10,
+    padding: '10px 20px',
+    width: 60,
     background: '#f0f0f0'
   }}>
 
     <ul style={{listStyleType: 'none', padding: 0}}>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/about">About</Link></li>
-      <li><Link to="/topics">Topics</Link></li>
+      
+      <li>
+        <Link to="/">{path === '/'
+        ? <strong>Home</strong>
+        : 'Home'}
+        </Link>
+      </li>
+
+      <li>
+        <Link to="/about">{path === '/about'
+        ? <strong>About</strong>
+        : 'About'}
+        </Link>
+      </li>
+
+      <li>
+        <Link to="/topics">{path === '/topics'
+        ? <strong>Topics</strong>
+        : 'Topics'}
+        </Link>
+      </li>
+
     </ul>
-
-    {routes.map((rt, idx) => (
-
-      // When you render a <Route> anywhere in your app,
-      // it will render with any others that match the URL.
-      // You can use multiple routes to create 'breadcrumbs'.
-      <Route
-        key={idx}
-        path={rt.path}
-        exact={rt.exact}
-        component={rt.sidebar}
-      />
-
-    ))}
 
   </div>
 
@@ -59,8 +65,9 @@ const Main = props => (
 
     {routes.map((rt, idx) => (
 
-      // Render more <Route>s with the same paths as
-      // above, but different components this time.
+      // When you render a <Route> anywhere in your app,
+      // it will render with any others that match the URL.
+      // You can use multiple routes to create 'breadcrumbs'.
       <Route
         key={idx}
         path={rt.path}
@@ -73,13 +80,26 @@ const Main = props => (
   </div>
 )
 
-const MultiRoutes = props => (
+const App = props => (
   <Router>
     <div style={{display: 'flex'}}>
-      <Sidebar/>
+      
+      {routes.map((rt, idx) => (
+
+        // Render more <Route>s with the same paths as
+        // above, but different components this time.
+        <Route
+          key={idx}
+          path={rt.path}
+          exact={rt.exact}
+          component={rt.sidebar}
+        />
+
+      ))}
+
       <Main/>
     </div>
   </Router>
 )
 
-export default MultiRoutes
+export default App
