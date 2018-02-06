@@ -33,23 +33,20 @@ const Sidebar = ({path}) => (
     <ul style={{listStyleType: 'none', padding: 0}}>
       
       <li>
-        <Link to="/">{path === '/'
-        ? <strong>Home</strong>
-        : 'Home'}
+        <Link to="/">
+        {path === '/' ? <strong>Home</strong> : 'Home'}
         </Link>
       </li>
 
       <li>
-        <Link to="/about">{path === '/about'
-        ? <strong>About</strong>
-        : 'About'}
+        <Link to="/about">
+        {path === '/about' ? <strong>About</strong> : 'About'}
         </Link>
       </li>
 
       <li>
-        <Link to="/topics">{path === '/topics'
-        ? <strong>Topics</strong>
-        : 'Topics'}
+        <Link to="/topics">
+        {path === '/topics' ? <strong>Topics</strong> : 'Topics'}
         </Link>
       </li>
 
